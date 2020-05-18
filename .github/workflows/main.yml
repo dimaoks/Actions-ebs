@@ -35,8 +35,7 @@ jobs:
       run: aws s3 cp ${{ env.Deploy_name }} s3://{{ env.S3Bucket }}/
      
 
-      -name: Print happy Congrat 
-       run: echo "123"
+     
   
  
 
