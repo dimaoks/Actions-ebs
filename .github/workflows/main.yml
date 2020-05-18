@@ -1,5 +1,3 @@
-
-
 name: CI-CD-pipline-AWS
 env: 
   S3Bucket: "github-actins"
@@ -10,7 +8,8 @@ env:
 
 on:
   push:
-    branches: [ master ]
+    branches: 
+      - master
  
 
 jobs:
@@ -18,10 +17,10 @@ jobs:
    runs-on: ubuntu-latest 
    
  
-    steps:
+   steps: 
+   
     - name: Git clone our repo
       uses: actions/checkout@v2
-
 
     - name: Create zip
       run: zip -r ${{ env.Deploy_name }} ./ -x*.git*
