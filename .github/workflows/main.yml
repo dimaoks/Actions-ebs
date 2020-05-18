@@ -26,7 +26,7 @@ jobs:
        run: zip -r ${{ env.Deploy_name }} ./ -x*.git*
       
      - name: Configure my AWS credentials
-       uses: Actions-ebs/Config-AWS-CRED@v2
+       uses: Actions-ebs/Config-AWS-CRED@v1
        with:
         aws-access-key-id: ${{ secrets.AWS }}
         aws-secret-key-id: ${{ secrets.AWS_Secret_key }}
