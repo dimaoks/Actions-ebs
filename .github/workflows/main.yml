@@ -14,31 +14,53 @@ on:
 
 jobs:
   CI:
-   runs-on: ubuntu-latest 
+      runs-on: ubuntu-latest 
    
  
-   steps:
+      steps:
    
-     - name: Git clone our repo
-       uses: actions/checkout@v2
+        - name: Git clone our repo
+          uses: actions/checkout@v2
 
-     - name: Create zip
-       run: zip -r ${{ env.Deploy_name }} ./ -x*.git*
+        - name: Create zip
+          run: zip -r ${{ env.Deploy_name }} ./ -x*.git*
       
-     - name: Configure AWS credentials
-       uses: aws-actions/configure-aws-credentials@v1
-       with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_Region_name }} 
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+             aws-region: ${{ env.AWS_Region_name }} 
       
-     - name: Copy ZIP in S3 bucket
-       run: aws s3 cp ${{ env.Deploy_name }} s3://${{ env.S3_BUCKET_NAME }}/
-     - name: congratulations
-       run: echo "Congratulation with good build"
+        - name: Copy ZIP in S3 bucket
+          run: aws s3 cp ${{ env.Deploy_name }} s3://${{ env.S3_BUCKET_NAME }}/
+        - name: congratulations good finish CI
+          run: echo "Congratulation with good finish CI"
 
      
-  
+  CD:
+     runs-on: ubuntu-latest
+     needs: [CI]
+     steps:
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+             aws-region: ${{ env.AWS_Region_name }}  
+        - name: Create EB applications
+          run: |
+            aws elastikbeanstalk create-application-version \
+            --application-name ${{ env.action-beanstock }} \
+            --source-bundle s3Bucket="${{ env.S3_BUCKET_NAME }}",s3key="${{ env.Deploy_name }}" \
+            --version-label "ver-${{ github.sha }}" \
+            --description "Commit-sha ${{ github.sha }}"
+         
+        - name: Deploy applications to EB
+          run: aws elasticbeanstalk update-environment --environment-name ${{ env.BS_Eviroment_name }} --version-label "ver-${{ github.sha }}"
+        - name: congratulations good finish CD
+          run: echo "Congratulation with good finish CD"
+                    
  
 
   
