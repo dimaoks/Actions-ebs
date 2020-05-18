@@ -33,7 +33,7 @@ jobs:
           aws-region: ${{ env.AWS_Region_name }} 
       
      - name: Copy ZIP in S3 bucket
-       run: aws s3 cp ${{ env.Deploy_name }} s3://{{ env.S3_BUCKET_NAME }}/
+       run: aws s3 cp ${{ env.Deploy_name }} s3://${{ env.S3_BUCKET_NAME }}/
      - name: congratulations
        run: echo "Congratulation with good build"
 
