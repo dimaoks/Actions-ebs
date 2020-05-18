@@ -28,8 +28,8 @@ jobs:
      - name: Configure my AWS credentials
        uses: aws-actions/configure-aws-credentials@v1
        with:
-        aws-access-key-id: ${{ secrets.AWS }}
-        aws-secret-key-id: ${{ secrets.AWS_Secret_key }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-key-id: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_Region_name }} 
       
      - name: Copy ZIP in S3 bucket
