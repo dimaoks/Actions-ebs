@@ -4,7 +4,7 @@ env:
   Aplication_name  : "action-beanstock"
   BS_Eviroment_name: "ActionBeanstock-env"
   Deploy_name      : "ActionBeanstock-env_${{ github.sha }}.zip"
-  AWS_Region_name  : "us-west-2" 
+  AWS_Region_name  : "us-east-1" 
 
 on:
   push:
