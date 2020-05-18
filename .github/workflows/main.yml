@@ -50,7 +50,7 @@ jobs:
              aws-region: ${{ env.AWS_Region_name }}  
         - name: Create EB applications
           run: |
-            aws elastikbeanstalk create-application-version \
+            aws elasticbeanstalk create-application-version \
             --application-name ${{ env.action-beanstock }} \
             --source-bundle s3Bucket="${{ env.S3_BUCKET_NAME }}",s3key="${{ env.Deploy_name }}" \
             --version-label "ver-${{ github.sha }}" \
