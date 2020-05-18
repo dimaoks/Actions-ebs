@@ -17,23 +17,25 @@ jobs:
    runs-on: ubuntu-latest 
    
  
-   steps: 
+   steps:
    
-    - name: Git clone our repo
+     - name: Git clone our repo
       uses: actions/checkout@v2
 
-    - name: Create zip
+     - name: Create zip
       run: zip -r ${{ env.Deploy_name }} ./ -x*.git*
-    - name : Configure my AWS credentials
+      
+     - name: Configure my AWS credentials
       uses: Actions-ebs/Config-AWS-CRED@v2
       with:
         aws-access-key-id: ${{ secrets.AWS }}
         aws-secret-key-id: ${{ secrets.AWS_Secret_key }}
-        aws-region: ${{ env.AWS_Region_name }}   
-        
-      -name: Copy ZIP in S3 bucket
+        aws-region: ${{ env.AWS_Region_name }} 
+      
+      - name: Copy ZIP in S3 bucket
       run: aws s3 cp ${{ env.Deploy_name }} s3://{{ env.S3Bucket }}/
-     
+       - name: congratulations
+       run: echo "Congratulation with good build"
 
      
   
