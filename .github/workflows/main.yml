@@ -1,8 +1,8 @@
 name: CI-CD-pipline-AWS
 env: 
   S3_BUCKET_NAME   : "github-actins"
-  Aplication_name  : "action-beanstock"
-  BS_Eviroment_name: "ActionBeanstock-env"
+  Aplication_name  : "python-test"
+  BS_Eviroment_name: "PythonTest-env"
   Deploy_name      : "ActionBeanstock-env_${{ github.sha }}.zip"
   AWS_Region_name  : "us-east-1" 
 
